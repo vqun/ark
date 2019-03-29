@@ -1,0 +1,22 @@
+{
+  "name": "ark",
+  "version": "0.0.2",
+  "description": "基于模板（art-template）的View层框架",
+  "main": "lib/index.js",
+  "repository": "git@github.com:vqun/ark.git",
+  "author": "vqun <veequn@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "./node_modules/.bin/rollup --config rollup.config.js"
+  },
+  "dependencies": {
+    "art-template": "^4.13.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "rollup": "^1.7.0",
+    "rollup-plugin-babel": "^4.3.2"
+  }
+}
