@@ -111,10 +111,9 @@ export default class Component extends Event {
   }
 
   __renderComponent__(Type, props) {
-    let component = this.__components__[this.__updatePropsCursor__]
+    let component = this.__components__[this.__updatePropsCursor__++]
     if (!!component) {
       component.__willReceiveProps__(props)
-      ++this.__updatePropsCursor__
     } else {
       this.__components__.push(component = new Type(props))
     }
