@@ -16,17 +16,36 @@ const rule = {
   }
 }
 
-const PROPS_REG_EXP = /([a-z]\w*)(?:\=(["']){{\s*(.*?)\s*}}\2)?/gim
+const PROPS_REG_EXP = /([a-z]\w*)(?:\=(["'])({{)?\s*(.*?)\s*(}})?\2)?/gim
 
-function stringifyProps(propsString, children) {
-  PROPS_REG_EXP.lastIndex = 0
-  const props = [`children:${children}`]
-  let match
-  while (match = PROPS_REG_EXP.exec(propsString)) {
-    props.push(`${match[1]}:${match[3] || 'true'}`)
-  }
-  return `{${props.join(',')}}`
-}
+    function stringifyProps(propsString, children) {
+      PROPS_REG_EXP.lastIndex = 0
+      const props = [`children:${children}`]
+      let match, isArtVar
+      while (match = PROPS_REG_EXP.exec(propsString)) {
+        isArtVar = false
+        if (match[3] && match[5]) {
+          isArtVar = true
+        }
+
+        const v = match[4]
+        props.push(`${match[1]}:${isArtVar ? v : transform(v)}`)
+      }
+      return `{${props.join(',')}}`
+    }
+
+    function transform(v) {
+      if (/^\d+$/.test(v)) {
+        return Number(v)
+      }
+      if (!v || v === 'true') {
+        return true
+      }
+      if (v === 'false') {
+        return false
+      }
+      return `"${v}"`
+    }
 
 template.defaults.rules.unshift(rule)
 export default template
