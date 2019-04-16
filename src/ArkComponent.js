@@ -71,6 +71,7 @@ export default class Component extends Event {
     this.__bindEvents__()
     this.didMount()
     this.__do__('__didMount__')
+    this.__updatePropsCursor__ = 0
   }
   __willUpdate__() {
     this.willUpdate()
